@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "555223226050",
+    "firebase_url": "https://gestaologistica-6777c.firebaseio.com",
+    "project_id": "gestaologistica-6777c",
+    "storage_bucket": "gestaologistica-6777c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555223226050:android:39286bcf5f145a45",
+        "android_client_info": {
+          "package_name": "br.com.qfaz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555223226050-0qq4hljsbobk27pltuha707v8kqjqoki.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.qfaz",
+            "certificate_hash": "eea7473b67e2bde641641b231f4a6b54ef6b0964"
+          }
+        },
+        {
+          "client_id": "555223226050-4i85pgbarvfgaevnr54sdonovgtqcb4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2yX3k_ViMJKCiwYCbaVx6Tmszw2clYnE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555223226050-4i85pgbarvfgaevnr54sdonovgtqcb4v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
