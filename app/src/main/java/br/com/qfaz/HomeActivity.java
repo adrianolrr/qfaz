@@ -86,13 +86,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-       /* btnTicket.setOnClickListener(new View.OnClickListener() {
+        btnTicket = findViewById(R.id.btnTicketsHome);
+       btnTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentTicket = new Intent(HomeActivity.this, ComprovanteActivity.class);
                 startActivity(intentTicket);
             }
-        });*/
+        });
 
 
 
