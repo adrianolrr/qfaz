@@ -1,13 +1,182 @@
 package br.com.qfaz;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Collections;
+import java.util.HashMap;
+
+import br.com.qfaz.domain.model.Local;
+import br.com.qfaz.domain.model.Usuario;
 
 public class SignupActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+
+    String email, password, cnpj, nome, razao, cep, endereco, numero, codigo, cpf;
+
+    EditText editTextEmail, editTextPassword, editTextCnpj, editTextRazao, editTextNome, editTextCep, editTextNumero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        mAuth = FirebaseAuth.getInstance();
+
+
+        Button btnCadastrar = findViewById(R.id.btnSignupCadastrar);
+        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cadastrarUsuario();
+            }
+        });
+
+
+    }
+
+    private void cadastrarUsuario() {
+
+
+
+        editTextEmail = findViewById(R.id.editTextSignupEmail);
+        editTextPassword = findViewById(R.id.editTextSignupSenha);
+        editTextCnpj = findViewById(R.id.editTextSignupCnpj);
+        editTextNome = findViewById(R.id.editTextSignupNome);
+        //editTextRazao = findViewById(R.id.editTextSignupRazao);
+        editTextCep = findViewById(R.id.editTextSignupCep);
+        editTextNumero = findViewById(R.id.editTextSignupNumero);
+
+        email = editTextEmail.getText().toString();
+        password = editTextPassword.getText().toString();
+        //cnpj = editTextCnpj.getText().toString();
+        //razao = editTextRazao.getText().toString();
+        //nome = editTextNome.getText().toString();
+        //cep = editTextCep.getText().toString();
+        //numero = editTextNumero.getText().toString();
+
+        email = "adriano.lrr@gmail.com";
+        password = "8133l@c@w";
+        cnpj = "1111111";
+        razao = "Ramos Rosa";
+        nome = "Adriano Teste";
+        cep = "18103120";
+        numero = "108";
+        codigo = "XXXYYY";
+        cpf = "35996466864";
+
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            // Write a message to the database
+                           // FirebaseDatabase database = FirebaseDatabase.getInstance();
+                           // DatabaseReference myRefEmpresa = database.getReference("empresas/").child(cnpj);
+
+                            Local local = new Local(cnpj, null, nome, cep, endereco, numero);
+
+                            HashMap<String, Object> resultLocal = (HashMap<String, Object>) local.toMap();
+
+                            //myRefEmpresa.setValue(resultLocal);
+
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            // Add a new document with a generated ID
+                            db.collection("locais")
+                                    .document(cnpj)
+                                    .set(resultLocal)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("Sucesso", "DocumentSnapshot successfully written!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("Erro", "Error adding document", e);
+                                        }
+                                    });
+
+
+                            // Add a new document with a generated ID
+                            db.collection("empresas")
+                                    .document(cnpj)
+                                    .set(resultLocal)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("Sucesso", "DocumentSnapshot successfully written!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("Erro", "Error adding document", e);
+                                        }
+                                    });
+
+                            //DatabaseReference myRefUsuario = database.getReference("usuario/").child(user.getUid());
+
+                            Usuario usuario = new Usuario(null, email, cnpj, cpf, codigo, Collections.singletonList("Administrador"), true, null, null );
+
+
+                            HashMap<String, Object> resultUsuario = (HashMap<String, Object>) usuario.toMap();
+
+                            db.collection("pessoas")
+                                    .document(user.getUid())
+                                    .set(resultUsuario)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("Sucesso", "DocumentSnapshot successfully written!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("Erro", "Error adding document", e);
+                                        }
+                                    });
+
+                            //myRefUsuario.setValue(usuario);
+
+                            Toast.makeText(SignupActivity.this, "Cadastro efetivado com sucesso!",
+                                    Toast.LENGTH_SHORT).show();
+                            finish();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("Erro", "createUserWithEmail:failure", task.getException());
+
+                            Toast.makeText(SignupActivity.this, "Falha no cadastro" +  task.getException(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
 }

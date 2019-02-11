@@ -41,6 +41,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnCadastrar = findViewById(R.id.btnLoginCadastrar);
+        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void loginUsuario(){
@@ -50,6 +59,9 @@ public class LoginActivity extends AppCompatActivity {
 
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
+
+        email = "adriano.lrr@gmail.com";
+        password = "macallacam";
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -71,7 +83,4 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
-
 }

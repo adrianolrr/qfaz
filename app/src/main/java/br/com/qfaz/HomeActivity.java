@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,12 +27,15 @@ public class HomeActivity extends AppCompatActivity {
     //the recyclerview
     RecyclerView recyclerView;
 
-    Button btnMapa, btnSalvar, btnTicket;
+    Button btnMapa, btnSalvar, btnTicket, btnBuscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
 
         //getting the recyclerview from xml
@@ -45,23 +49,10 @@ public class HomeActivity extends AppCompatActivity {
         visitaList.add(
                 new Visita(
                         "1",
-                        "Empresa 1",
+                        null,
                         "05/02/2019",
                         "22:15"));
 
-        visitaList.add(
-                new Visita(
-                        "2",
-                        "Empresa 1",
-                        "05/02/2019",
-                        "22:15"));
-
-        visitaList.add(
-                new Visita(
-                        "3",
-                        "Empresa 3",
-                        "05/02/2019",
-                        "22:15"));
 
         //creating recyclerview adapter
         VisitaAdapter adapter = new VisitaAdapter(this, visitaList);
@@ -90,11 +81,19 @@ public class HomeActivity extends AppCompatActivity {
        btnTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentTicket = new Intent(HomeActivity.this, ComprovanteActivity.class);
+                Intent intentTicket = new Intent(HomeActivity.this, TicketActivity.class);
                 startActivity(intentTicket);
             }
         });
 
+       btnBuscar = findViewById(R.id.btnBuscarEmpresa);
+       btnBuscar.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intentBuscar = new Intent(HomeActivity.this, LocalActivity.class);
+               startActivity(intentBuscar);
+           }
+       });
 
 
     }

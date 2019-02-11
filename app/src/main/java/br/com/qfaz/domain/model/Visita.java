@@ -1,5 +1,7 @@
 package br.com.qfaz.domain.model;
 
+import java.util.List;
+
 public class Visita {
 
     public String getUid() {
@@ -10,11 +12,11 @@ public class Visita {
         this.uid = uid;
     }
 
-    public String getLocal() {
+    public Local getLocal() {
         return local;
     }
 
-    public void setLocal(String local) {
+    public void setLocal(Local local) {
         this.local = local;
     }
 
@@ -34,16 +36,15 @@ public class Visita {
         this.horario = horario;
     }
 
-    private String uid;
-
-    public Visita(String uid, String local, String data, String horario) {
+    public Visita(String uid, Local local, String data, String horario) {
         this.uid = uid;
         this.local = local;
         this.data = data;
         this.horario = horario;
     }
 
-    private String local;
+    private String uid;
+    private Local local;
     private String data;
     private String horario;
 }

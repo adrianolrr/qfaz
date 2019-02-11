@@ -41,9 +41,9 @@ public class VisitaAdapter extends RecyclerView.Adapter<VisitaAdapter.VisitaView
         Visita visita = visitaList.get(position);
 
         //binding the data with the viewholder views
-        holder.textViewLocal.setText(visita.getLocal());
-        holder.textViewHorario.setText(visita.getHorario());
-        holder.textViewData.setText(visita.getData());
+        //holder.textViewLocal.setText(visita.getLocal());
+        //holder.textViewHorario.setText(visita.getHorario());
+        //holder.textViewData.setText(visita.getData());
 
 
     }
