@@ -21,14 +21,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import br.com.qfaz.adapters.PerfilAdapter;
-import br.com.qfaz.domain.model.Perfil;
+import br.com.qfaz.adapters.UsuarioAdapter;
+import br.com.qfaz.domain.model.Usuario;
 
 public class UsuarioActivity extends AppCompatActivity {
 
 
-    //a list to store all the perfils
-    List<Perfil> perfilList;
+    //a list to store all the usuarios
+    List<Usuario> usuarioList;
 
     //the recyclerview
     RecyclerView recyclerView;
@@ -48,15 +48,15 @@ public class UsuarioActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        Button btnSalvarPerfil = findViewById(R.id.btnSalvarPerfil);
-        btnSalvarPerfil.setOnClickListener(new View.OnClickListener() {
+        Button btnSalvarUsuario = findViewById(R.id.btnSalvarUsuario);
+        btnSalvarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                editTextNome = findViewById(R.id.editTextNomePerfil);
-                editTextEmail = findViewById(R.id.editTextEmailPerfil);
-                editTextTelefone = findViewById(R.id.editTextTelefonePerfil);
-                editTextSenha = findViewById(R.id.editTextSenhaPerfil);
+                editTextNome = findViewById(R.id.editTextNomeUsuario);
+                editTextEmail = findViewById(R.id.editTextEmailUsuario);
+                editTextTelefone = findViewById(R.id.editTextTelefoneUsuario);
+                editTextSenha = findViewById(R.id.editTextSenhaUsuario);
                 editTextCodigoEmpresa = findViewById(R.id.editTextCodigoEmpresa);
 
                 telefone = editTextTelefone.getText().toString();
@@ -67,11 +67,11 @@ public class UsuarioActivity extends AppCompatActivity {
 
                 FirebaseUser user = mAuth.getCurrentUser();
 
-                Perfil perfil = new Perfil(codigoempresa, nome, email, telefone, status);
+                Usuario usuario = new Usuario(codigoempresa, nome, email, telefone, status, null, null);
 
-                HashMap<String, Object> resultPerfil = (HashMap<String, Object>) perfil.toMap();
+                HashMap<String, Object> resultUsuario = (HashMap<String, Object>) usuario.toMap();
 
-                //myRefEmpresa.setValue(resultPerfil);
+                //myRefEmpresa.setValue(resultUsuario);
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 // Add a new document with a generated ID
@@ -79,7 +79,7 @@ public class UsuarioActivity extends AppCompatActivity {
                         .document(codigoempresa)
                         .collection(email)
                         .document("cadastrousuario")
-                        .set(resultPerfil)
+                        .set(resultUsuario)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -101,44 +101,52 @@ public class UsuarioActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //initializing the perfillist
-        perfilList = new ArrayList<>();
+        //initializing the usuariolist
+        usuarioList = new ArrayList<>();
 
-        perfilList.add(
-                new Perfil(
+        usuarioList.add(
+                new Usuario(
                         "XXX",
                         "Adriano Luiz Ramos Rosa",
                         "adriano.lrr@gmail.com",
                         "15981754694",
-                        "Liberado"));
+                        "Liberado",
+                        null,
+                        null));
 
-        perfilList.add(
-                new Perfil(
+        usuarioList.add(
+                new Usuario(
                         "XXX",
                         "Adriano Luiz Ramos Rosa",
                         "adriano.lrr@gmail.com",
                         "15981754694",
-                        "Liberado"));
+                        "Liberado",
+                        null,
+                        null));
 
-        perfilList.add(
-                new Perfil(
+        usuarioList.add(
+                new Usuario(
                         "XXX",
                         "Adriano Luiz Ramos Rosa",
                         "adriano.lrr@gmail.com",
                         "15981754694",
-                        "Bloqueado"));
+                        "Bloqueado",
+                        null,
+                        null));
 
-        perfilList.add(
-                new Perfil(
+        usuarioList.add(
+                new Usuario(
                         "XXX",
                         "Adriano Luiz Ramos Rosa",
                         "adriano.lrr@gmail.com",
                         "15981754694",
-                        "Bloqueado"));
+                        "Bloqueado",
+                        null,
+                        null));
 
 
         //creating recyclerview adapter
-        PerfilAdapter adapter = new PerfilAdapter(this, perfilList);
+        UsuarioAdapter adapter = new UsuarioAdapter(this, usuarioList);
 
         //setting adapter to recyclerview
         recyclerView.setAdapter(adapter);

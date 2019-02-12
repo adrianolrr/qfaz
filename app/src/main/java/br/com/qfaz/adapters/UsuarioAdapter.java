@@ -10,40 +10,40 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.qfaz.R;
-import br.com.qfaz.domain.model.Perfil;
+import br.com.qfaz.domain.model.Usuario;
 
-public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.PerfilViewHolder> {
+public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder> {
 
 
     //this context we will use to inflate the layout
     private Context mCtx;
 
-    //we are storing all the perfils in a list
-    private List<Perfil> perfilList;
+    //we are storing all the usuarios in a list
+    private List<Usuario> usuarioList;
 
-    //getting the context and perfil list with constructor
-    public PerfilAdapter(Context mCtx, List<Perfil> perfilList) {
+    //getting the context and usuario list with constructor
+    public UsuarioAdapter(Context mCtx, List<Usuario> usuarioList) {
         this.mCtx = mCtx;
-        this.perfilList = perfilList;
+        this.usuarioList = usuarioList;
     }
 
     @Override
-    public PerfilViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UsuarioViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.layout_perfis, null);
-        return new PerfilViewHolder(view);
+        return new UsuarioViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PerfilViewHolder holder, int position) {
-        //getting the perfil of the specified position
-        Perfil perfil = perfilList.get(position);
+    public void onBindViewHolder(UsuarioViewHolder holder, int position) {
+        //getting the usuario of the specified position
+        Usuario usuario = usuarioList.get(position);
 
         //binding the data with the viewholder views
-        //holder.textViewLocal.setText(perfil.getLocal());
-        //holder.textViewHorario.setText(perfil.getHorario());
-        //holder.textViewData.setText(perfil.getData());
+        //holder.textViewLocal.setText(usuario.getLocal());
+        //holder.textViewHorario.setText(usuario.getHorario());
+        //holder.textViewData.setText(usuario.getData());
 
 
     }
@@ -51,15 +51,15 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.PerfilView
 
     @Override
     public int getItemCount() {
-        return perfilList.size();
+        return usuarioList.size();
     }
 
 
-    class PerfilViewHolder extends RecyclerView.ViewHolder {
+    class UsuarioViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewLocal, textViewHorario, textViewData;
 
-        public PerfilViewHolder(View itemView) {
+        public UsuarioViewHolder(View itemView) {
             super(itemView);
 
             textViewLocal = itemView.findViewById(R.id.textViewLocal);

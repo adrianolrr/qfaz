@@ -3,6 +3,7 @@ package br.com.qfaz.domain.model;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Usuario {
@@ -56,12 +57,14 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Usuario(String codigoempresa, String nome, String email, String telefone, String status) {
+    public Usuario(String codigoempresa, String nome, String email, String telefone, String status, Visita visita, HistoricoLocalizacao historicoLocalizacao) {
         this.codigoempresa = codigoempresa;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.status = status;
+        this.visita = visita;
+        this.historicoLocalizacao = (List<HistoricoLocalizacao>) historicoLocalizacao;
     }
     
     public Usuario(){
@@ -87,4 +90,28 @@ public class Usuario {
     private String senha;
     private String telefone;
     private String status;
+    private Visita visita;
+
+    public List<HistoricoLocalizacao> getHistoricoLocalizacao() {
+        return historicoLocalizacao;
+    }
+
+    public void setHistoricoLocalizacao(List<HistoricoLocalizacao> historicoLocalizacao) {
+        this.historicoLocalizacao = historicoLocalizacao;
+    }
+
+    private List<HistoricoLocalizacao> historicoLocalizacao;
+
+
+    public Visita getVisita() {
+        return visita;
+    }
+
+    public void setVisita(Visita visita) {
+        this.visita = visita;
+    }
+
+
+
+
 }

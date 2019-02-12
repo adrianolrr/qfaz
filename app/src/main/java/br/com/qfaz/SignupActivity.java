@@ -25,13 +25,14 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import br.com.qfaz.domain.model.Local;
+import br.com.qfaz.domain.model.Empresa;
 import br.com.qfaz.domain.model.Usuario;
 
 public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    String email, password, cnpj, nome, razao, cep, endereco, numero, codigo, cpf;
+    String email, password, cnpj, nome, razao, cep, endereco, numero, codigoempresa;
 
     EditText editTextEmail, editTextPassword, editTextCnpj, editTextRazao, editTextNome, editTextCep, editTextNumero;
 
@@ -47,14 +48,14 @@ public class SignupActivity extends AppCompatActivity {
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cadastrarUsuario();
+                cadastrarEmpresa();
             }
         });
 
 
     }
 
-    private void cadastrarUsuario() {
+    private void cadastrarEmpresa() {
 
 
 
@@ -81,8 +82,7 @@ public class SignupActivity extends AppCompatActivity {
         nome = "Adriano Teste";
         cep = "18103120";
         numero = "108";
-        codigo = "XXXYYY";
-        cpf = "35996466864";
+        codigoempresa = "XXXYYY";
 
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -138,16 +138,16 @@ public class SignupActivity extends AppCompatActivity {
                                         }
                                     });
 
-                            //DatabaseReference myRefUsuario = database.getReference("usuario/").child(user.getUid());
+                            //DatabaseReference myRefEmpresa = database.getReference("empresa/").child(user.getUid());
 
-                            Usuario usuario = new Usuario(null, email, cnpj, cpf, codigo, Collections.singletonList("Administrador"), true, null, null );
+                            Empresa empresa = new Empresa(cnpj, razao, nome, cep, endereco, numero, codigoempresa );
 
 
-                            HashMap<String, Object> resultUsuario = (HashMap<String, Object>) usuario.toMap();
+                            HashMap<String, Object> resultEmpresa = (HashMap<String, Object>) empresa.toMap();
 
                             db.collection("pessoas")
                                     .document(user.getUid())
-                                    .set(resultUsuario)
+                                    .set(resultEmpresa)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -161,7 +161,27 @@ public class SignupActivity extends AppCompatActivity {
                                         }
                                     });
 
-                            //myRefUsuario.setValue(usuario);
+                            Usuario usuario = new Usuario(codigoempresa, nome, email, null, null, null, null);
+
+                            HashMap<String, Object> resultUsuario = (HashMap<String, Object>) usuario.toMap();
+
+                            db.collection("usuarios")
+                                    .document(codigoempresa)
+                                    .collection(email)
+                                    .document("cadastrousuario")
+                                    .set(resultUsuario)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("Sucesso", "DocumentSnapshot successfully written!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("Erro", "Error adding document", e);
+                                        }
+                                    });
 
                             Toast.makeText(SignupActivity.this, "Cadastro efetivado com sucesso!",
                                     Toast.LENGTH_SHORT).show();

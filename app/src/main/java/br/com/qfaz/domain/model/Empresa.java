@@ -56,13 +56,22 @@ public class Empresa {
         this.numero = numero;
     }
 
-    public Empresa(String cnpj, String razao, String nome, String cep, String endereco, String numero) {
+    public String getCodigoempresa() {
+        return codigoempresa;
+    }
+
+    public void setCodigoempresa(String codigoempresa) {
+        this.codigoempresa = codigoempresa;
+    }
+
+    public Empresa(String cnpj, String razao, String nome, String cep, String endereco, String numero, String codigoempresa) {
         this.cnpj = cnpj;
         this.razao = razao;
         this.nome = nome;
         this.cep = cep;
         this.endereco = endereco;
         this.numero = numero;
+        this.codigoempresa = codigoempresa;
     }
 
     public Empresa(){
@@ -78,6 +87,7 @@ public class Empresa {
         result.put("cep", cep);
         result.put("endereco", endereco);
         result.put("numero", numero);
+        result.put("codigoempresa", codigoempresa);
 
         return result;
     }
@@ -88,4 +98,9 @@ public class Empresa {
     private String endereco;
     private String numero;
     private String cnpj;
+    private String codigoempresa;
+
+
+
+
 }

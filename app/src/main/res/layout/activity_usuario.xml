@@ -7,7 +7,7 @@
     tools:context=".UsuarioActivity">
 
     <EditText
-        android:id="@+id/editTextEmailPerfil"
+        android:id="@+id/editTextEmailUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -17,10 +17,10 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNomePerfil" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNomeUsuario" />
 
     <EditText
-        android:id="@+id/editTextNomePerfil"
+        android:id="@+id/editTextNomeUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTelefonePerfil"
+        android:id="@+id/editTextTelefoneUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -43,10 +43,10 @@
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmailPerfil" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailUsuario" />
 
     <EditText
-        android:id="@+id/editTextSenhaPerfil"
+        android:id="@+id/editTextSenhaUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -56,7 +56,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTelefonePerfil" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTelefoneUsuario" />
 
     <EditText
         android:id="@+id/editTextCodigoEmpresa"
@@ -69,16 +69,16 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSenhaPerfil" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextSenhaUsuario" />
 
     <Button
-        android:id="@+id/btnSalvarPerfil"
+        android:id="@+id/btnSalvarUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="SalvarPerfil"
+        android:text="SalvarUsuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSalvarPerfil"
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvarUsuario"
         app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

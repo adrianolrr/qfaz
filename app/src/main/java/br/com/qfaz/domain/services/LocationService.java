@@ -291,7 +291,7 @@ public class LocationService extends Service implements LocationListener, GpsSta
 
         HistoricoLocalizacao historicoLocalizacao = new HistoricoLocalizacao(latitude, longitude, horario, data);
 
-        usuario.setLitsaHistoricoLocalizacao((List<HistoricoLocalizacao>) historicoLocalizacao);
+        usuario.setHistoricoLocalizacao((List<HistoricoLocalizacao>) historicoLocalizacao);
 
         HashMap<String, Object> resultHitoricoLocalizacao = (HashMap<String, Object>) historicoLocalizacao.toMap();
 
