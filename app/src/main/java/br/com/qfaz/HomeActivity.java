@@ -21,11 +21,7 @@ import br.com.qfaz.domain.model.Visita;
 
 public class HomeActivity extends AppCompatActivity {
 
-    //a list to store all the visitas
-    List<Visita> visitaList;
 
-    //the recyclerview
-    RecyclerView recyclerView;
 
     Button btnMapa, btnSalvar, btnTicket, btnBuscar;
 
@@ -34,31 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
 
-
-        //getting the recyclerview from xml
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //initializing the visitalist
-        visitaList = new ArrayList<>();
-
-        visitaList.add(
-                new Visita(
-                        "1",
-                        null,
-                        "05/02/2019",
-                        "22:15"));
-
-
-        //creating recyclerview adapter
-        VisitaAdapter adapter = new VisitaAdapter(this, visitaList);
-
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
 
         btnMapa = findViewById(R.id.btnMapaHome);
         btnMapa.setOnClickListener(new View.OnClickListener() {

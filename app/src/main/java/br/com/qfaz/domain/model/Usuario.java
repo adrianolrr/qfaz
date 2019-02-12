@@ -3,11 +3,18 @@ package br.com.qfaz.domain.model;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Usuario {
 
+
+    public String getCodigoempresa() {
+        return codigoempresa;
+    }
+
+    public void setCodigoempresa(String codigoempresa) {
+        this.codigoempresa = codigoempresa;
+    }
 
     public String getNome() {
         return nome;
@@ -25,88 +32,38 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
-    public List<String> getPermissao() {
-        return permissao;
-    }
-
-    public void setPermissao(List<String> permissao) {
-        this.permissao = permissao;
-    }
-
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public List<Visita> getListaVisita() {
-        return listaVisita;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setListaVisita(List<Visita> listaVisita) {
-        this.listaVisita = listaVisita;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public List<HistoricoLocalizacao> getListaHistoricoLocalizacao() {
-        return listaHistoricoLocalizacao;
-    }
-
-    public void setLitsaHistoricoLocalizacao(List<HistoricoLocalizacao> litsaHistoricoLocalizacao) {
-        this.listaHistoricoLocalizacao = litsaHistoricoLocalizacao;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public void setListaHistoricoLocalizacao(List<HistoricoLocalizacao> listaHistoricoLocalizacao) {
-        this.listaHistoricoLocalizacao = listaHistoricoLocalizacao;
-    }
-    public Usuario(String nome, String email,  String cnpj, String cpf, String codigo, List<String> permissao, Boolean status, List<Visita> listaVisita, List<HistoricoLocalizacao> litsaHistoricoLocalizacao) {
+    public Usuario(String codigoempresa, String nome, String email, String telefone, String status) {
+        this.codigoempresa = codigoempresa;
         this.nome = nome;
         this.email = email;
-        this.cnpj = cnpj;
-        this.permissao = permissao;
+        this.telefone = telefone;
         this.status = status;
-        this.listaVisita = listaVisita;
-        this.listaHistoricoLocalizacao = litsaHistoricoLocalizacao;
     }
-
-    private String nome;
-    private String email;
-    private String codigo;
-    private String cnpj;
-
-
-
-    private String cpf;
-    private List<String> permissao;
-    private Boolean status;
-    private List<Visita> listaVisita;
-    private List<HistoricoLocalizacao> listaHistoricoLocalizacao;
-
+    
     public Usuario(){
 
     }
@@ -114,14 +71,20 @@ public class Usuario {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("codigoempresa", codigoempresa);
         result.put("nome", nome);
         result.put("email", email);
-        result.put("codigo", codigo);
-        result.put("cpf", cpf);
-        result.put("cnpj", cnpj);
-        result.put("permissao", permissao);
+        result.put("telefone", telefone);
         result.put("status", status);
 
         return result;
     }
+    
+
+    private String codigoempresa;
+    private String nome;
+    private String email;
+    private String senha;
+    private String telefone;
+    private String status;
 }

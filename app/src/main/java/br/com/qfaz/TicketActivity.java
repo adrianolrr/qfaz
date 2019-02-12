@@ -8,6 +8,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,7 +23,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import br.com.qfaz.adapters.TicketAdapter;
+import br.com.qfaz.domain.model.Ticket;
 
 public class TicketActivity extends AppCompatActivity {
 
@@ -37,6 +44,12 @@ public class TicketActivity extends AppCompatActivity {
     private Uri filePath;
 
     private final int PICK_IMAGE_REQUEST = 71;
+
+    //a list to store all the products
+    List<Ticket> tickeList;
+
+    //the recyclerview
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +79,42 @@ public class TicketActivity extends AppCompatActivity {
                 uploadImage();
             }
         });
+
+        //getting the recyclerview from xml
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //initializing the tickeList
+        tickeList = new ArrayList<>();
+
+        //adding some items to our list
+        tickeList.add(
+                new Ticket(
+                        "Estacionamento",
+                        "Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
+                        14.3,
+                        R.drawable.ufn));
+
+        tickeList.add(
+                new Ticket(
+                        "Almoço",
+                        "14 inch, Gray, 1.659 kg",
+                        15.3,
+                        R.drawable.ufn));
+
+        tickeList.add(
+                new Ticket(
+                        "Pedagio",
+                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
+                        4.3,
+                        R.drawable.ufn));
+
+        //creating recyclerview adapter
+        TicketAdapter adapter = new TicketAdapter(TicketActivity.this, tickeList);
+
+        //setting adapter to recyclerview
+        recyclerView.setAdapter(adapter);
 
     }
     private void chooseImage() {
