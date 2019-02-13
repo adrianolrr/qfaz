@@ -92,61 +92,15 @@ public class SignupActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            // Write a message to the database
-                           // FirebaseDatabase database = FirebaseDatabase.getInstance();
-                           // DatabaseReference myRefEmpresa = database.getReference("empresas/").child(cnpj);
-
-                            Local local = new Local(cnpj, null, nome, cep, endereco, numero);
-
-                            HashMap<String, Object> resultLocal = (HashMap<String, Object>) local.toMap();
-
-                            //myRefEmpresa.setValue(resultLocal);
 
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            // Add a new document with a generated ID
-                            db.collection("locais")
-                                    .document(cnpj)
-                                    .set(resultLocal)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("Sucesso", "DocumentSnapshot successfully written!");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w("Erro", "Error adding document", e);
-                                        }
-                                    });
-
-
-                            // Add a new document with a generated ID
-                            db.collection("empresas")
-                                    .document(cnpj)
-                                    .set(resultLocal)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("Sucesso", "DocumentSnapshot successfully written!");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w("Erro", "Error adding document", e);
-                                        }
-                                    });
-
-                            //DatabaseReference myRefEmpresa = database.getReference("empresa/").child(user.getUid());
 
                             Empresa empresa = new Empresa(cnpj, razao, nome, cep, endereco, numero, codigoempresa );
 
-
                             HashMap<String, Object> resultEmpresa = (HashMap<String, Object>) empresa.toMap();
 
-                            db.collection("pessoas")
-                                    .document(user.getUid())
+                            db.collection("empresas")
+                                    .document(codigoempresa)
                                     .set(resultEmpresa)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -167,7 +121,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             db.collection("usuarios")
                                     .document(codigoempresa)
-                                    .collection(email)
+                                    .collection(user.getUid())
                                     .document("cadastrousuario")
                                     .set(resultUsuario)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {

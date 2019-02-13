@@ -1,13 +1,15 @@
-package br.com.qfaz;
+package br.com.qfaz.interfaces;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CadastroActivity extends AppCompatActivity {
+import br.com.qfaz.R;
+
+public class RelatorioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_relatorio);
     }
 }

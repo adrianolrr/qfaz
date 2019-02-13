@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".interfaces.CadastroActivity">
+    tools:context=".domain.interfaces.EmpresaActivity">
 
 </android.support.constraint.ConstraintLayout>
