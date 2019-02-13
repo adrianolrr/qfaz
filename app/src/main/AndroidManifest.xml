@@ -16,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UsuarioActivity"></activity>
+        <activity
+            android:name=".interfaces.PrincipalActivity"
+            android:label="@string/title_activity_principal"></activity>
+        <activity android:name=".UsuarioActivity" />
         <activity android:name=".VisitaActivity" />
         <activity android:name=".TicketActivity" />
         <activity android:name=".LocalActivity" />

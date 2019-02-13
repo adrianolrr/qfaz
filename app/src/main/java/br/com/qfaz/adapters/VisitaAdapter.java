@@ -1,10 +1,12 @@
 package br.com.qfaz.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -35,19 +37,18 @@ public class VisitaAdapter extends RecyclerView.Adapter<VisitaAdapter.VisitaView
         return new VisitaViewHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(VisitaViewHolder holder, int position) {
         //getting the visita of the specified position
         Visita visita = visitaList.get(position);
 
         //binding the data with the viewholder views
-        //holder.textViewLocal.setText(visita.getLocal());
-        //holder.textViewHorario.setText(visita.getHorario());
-        //holder.textViewData.setText(visita.getData());
-
-
+        holder.textViewLocal.setText(visita.getLocal().getNome());
+        holder.textViewHorario.setText(visita.getHorario());
+        holder.textViewData.setText(visita.getData());
     }
-
 
     @Override
     public int getItemCount() {
@@ -57,14 +58,14 @@ public class VisitaAdapter extends RecyclerView.Adapter<VisitaAdapter.VisitaView
 
     class VisitaViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewLocal, textViewHorario, textViewData;
+        TextView textViewLocal, textViewData, textViewHorario;
 
         public VisitaViewHolder(View itemView) {
             super(itemView);
 
             textViewLocal = itemView.findViewById(R.id.textViewLocal);
-            textViewHorario = itemView.findViewById(R.id.textViewHorario);
             textViewData = itemView.findViewById(R.id.textViewData);
+            textViewHorario = itemView.findViewById(R.id.textViewHorario);
         }
     }
 }
