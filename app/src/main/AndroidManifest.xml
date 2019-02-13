@@ -16,9 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".interfaces.PrincipalActivity"
-            android:label="@string/title_activity_principal"></activity>
+        <activity android:name=".interfaces.MainActivity"></activity>
         <activity android:name=".UsuarioActivity" />
         <activity android:name=".VisitaActivity" />
         <activity android:name=".TicketActivity" />
@@ -32,9 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".CadastroActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SignupActivity" />
         <!--
