@@ -15,7 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import br.com.qfaz.interfaces.PrincipalActivity;
+import br.com.qfaz.interfaces.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //loginUsuario();
 
-                Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
