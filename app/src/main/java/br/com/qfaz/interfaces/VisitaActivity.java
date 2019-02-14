@@ -1,4 +1,4 @@
-package br.com.qfaz;
+package br.com.qfaz.interfaces;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import br.com.qfaz.R;
 import br.com.qfaz.adapters.VisitaAdapter;
 import br.com.qfaz.domain.model.Visita;
 import br.com.qfaz.domain.model.Visita;

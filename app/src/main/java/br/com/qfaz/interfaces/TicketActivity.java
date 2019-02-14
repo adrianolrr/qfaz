@@ -1,4 +1,4 @@
-package br.com.qfaz;
+package br.com.qfaz.interfaces;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import br.com.qfaz.R;
 import br.com.qfaz.adapters.TicketAdapter;
 import br.com.qfaz.domain.model.Ticket;
 

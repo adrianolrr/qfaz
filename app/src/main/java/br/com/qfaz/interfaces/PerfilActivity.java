@@ -1,7 +1,9 @@
-package br.com.qfaz;
+package br.com.qfaz.interfaces;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import br.com.qfaz.R;
 
 public class PerfilActivity extends AppCompatActivity {
 

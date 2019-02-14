@@ -1,4 +1,4 @@
-package br.com.qfaz;
+package br.com.qfaz.interfaces;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import br.com.qfaz.R;
 import br.com.qfaz.domain.model.Local;
 
 public class LocalActivity extends AppCompatActivity {
