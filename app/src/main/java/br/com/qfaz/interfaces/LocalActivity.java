@@ -2,6 +2,7 @@ package br.com.qfaz.interfaces;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -21,10 +22,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import br.com.qfaz.R;
 import br.com.qfaz.domain.model.Local;
+import br.com.qfaz.fragments.LocaisFragments;
+import br.com.qfaz.fragments.PesquisaLocaisFragments;
 
 public class LocalActivity extends AppCompatActivity  {
 
@@ -38,6 +42,19 @@ public class LocalActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local);
+
+        LocaisFragments locaisFragments = new LocaisFragments();
+
+        // Add Fragment to FrameLayout (flContainer), using FragmentManager
+
+
+        Bundle args = new Bundle();
+        args.putString("response", "");
+        locaisFragments.setArguments(args);
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();// begin  FragmentTransaction
+        ft.add(R.id.frameLayoutLocal, locaisFragments);                                // add    Fragment
+        ft.commit();
 
         Button btnSalvarLocal = findViewById(R.id.btnSalvarLocal);
         btnSalvarLocal.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +132,64 @@ public class LocalActivity extends AppCompatActivity  {
                         });
             }
         });
+
+
+        Button btnCarregaEndereco = findViewById(R.id.btnLocalCarregaEndereco);
+        btnCarregaEndereco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextCep = findViewById(R.id.editTextLocalCep);
+                cep = editTextCep.getText().toString();
+
+                final String url = "//viaCEP.com.br/ws/" + cep + "/json/?callback=?";
+
+                RequestQueue queue = Volley.newRequestQueue(LocalActivity.this);
+
+                // prepare the Request
+                JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONObject>()
+                        {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // display response
+                                Log.d("Response", response.toString());
+
+                                       // (1) Communicate with Fragment using Bundle
+
+
+                                PesquisaLocaisFragments pesquisaLocaisFragments = new PesquisaLocaisFragments();
+
+                                Bundle args = new Bundle();
+                                args.putString("response", response.toString());
+                                pesquisaLocaisFragments.setArguments(args);
+                                getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.frameLayoutLocal, pesquisaLocaisFragments) // replace flContainer
+                                        .addToBackStack(null)
+                                        .commit();
+
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                );
+
+                getRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        5000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            // add it to the RequestQueue
+                queue.add(getRequest);
+            }
+        });
+
     }
+
 
 }
