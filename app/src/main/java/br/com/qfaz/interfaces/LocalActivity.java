@@ -26,11 +26,13 @@ import java.util.HashMap;
 import br.com.qfaz.R;
 import br.com.qfaz.domain.model.Local;
 
-public class LocalActivity extends AppCompatActivity {
+public class LocalActivity extends AppCompatActivity  {
 
     String cnpj, nome, razao, cep, endereco, numero, latitude, longitude;
 
     EditText editTextCnpj, editTextRazao, editTextNome, editTextCep, editTextNumero;
+
+    private int mYear, mMonth, mDay, mHour, mMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,4 +116,5 @@ public class LocalActivity extends AppCompatActivity {
             }
         });
     }
+
 }

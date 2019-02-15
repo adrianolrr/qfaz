@@ -38,8 +38,26 @@ public class PrincipalActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_favorite) {
+        if (id == R.id.visitas) {
             Intent intentVisita = new Intent(this, VisitaActivity.class);
+            startActivity(intentVisita);
+            Toast.makeText(PrincipalActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        else if (id == R.id.locais) {
+            Intent intentVisita = new Intent(this, LocalActivity.class);
+            startActivity(intentVisita);
+            Toast.makeText(PrincipalActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        else if (id == R.id.tickets) {
+            Intent intentVisita = new Intent(this, TicketActivity.class);
+            startActivity(intentVisita);
+            Toast.makeText(PrincipalActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        else if (id == R.id.cadastro) {
+            Intent intentVisita = new Intent(this, CadastroActivity.class);
             startActivity(intentVisita);
             Toast.makeText(PrincipalActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
             return true;
@@ -47,4 +65,6 @@ public class PrincipalActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
