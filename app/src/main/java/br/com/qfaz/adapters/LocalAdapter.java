@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
+
 import br.com.qfaz.R;
 import br.com.qfaz.domain.model.Local;
 

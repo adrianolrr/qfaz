@@ -56,14 +56,14 @@ public class LocaisFragments extends Fragment {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        /*
+
         Local[] arrayLocal = new Local[1];
 
         try {
             arrayLocal = mapper.readValue(local, Local[].class);
         } catch (IOException e) {
           e.printStackTrace();
-        }*/
+        }
 
 
         List<Local> list = new ArrayList<>();
@@ -88,7 +88,7 @@ public class LocaisFragments extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         // Inflate the xml file for the fragment
-        return inflater.inflate(R.layout.fragment_linha_local, parent, false);
+        return inflater.inflate(R.layout.fragment_lista_locais, parent, false);
     }
 
     @Override
