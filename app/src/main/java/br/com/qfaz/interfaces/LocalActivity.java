@@ -1,9 +1,12 @@
 package br.com.qfaz.interfaces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import br.com.qfaz.R;
 import br.com.qfaz.fragments.LocaisFragments;
@@ -16,6 +19,8 @@ public class LocalActivity extends AppCompatActivity  {
 
     private int mYear, mMonth, mDay, mHour, mMinute;
 
+    ImageButton btnAddCompany;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +31,16 @@ public class LocalActivity extends AppCompatActivity  {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();// begin  FragmentTransaction
         ft.add(R.id.frameLayoutLocal, locaisFragments);                                // add    Fragment
         ft.commit();
+
+
+        btnAddCompany = findViewById(R.id.toolbar_button);
+        btnAddCompany.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LocalActivity.this, AddLocalActivity.class);
+                startActivity(intent);
+            }
+        });
 
       /*
 

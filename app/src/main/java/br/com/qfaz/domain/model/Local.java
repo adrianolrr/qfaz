@@ -56,7 +56,23 @@ public class Local {
         this.numero = numero;
     }
 
-    public Local(String cnpj, String razao, String nome, String cep, String endereco, String numero, String latitude, String longitude) {
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public Local(String cnpj, String razao, String nome, String cep, String endereco, String numero, String latitude, String longitude, String cidade, String estado, String bairro) {
         this.cnpj = cnpj;
         this.razao = razao;
         this.nome = nome;
@@ -82,6 +98,9 @@ public class Local {
         result.put("numero", numero);
         result.put("latitude", longitude);
         result.put("longitude", longitude);
+        result.put("cidade", cidade);
+        result.put("estado", estado);
+        result.put("bairro", bairro);
 
         return result;
     }
@@ -92,23 +111,13 @@ public class Local {
     private String endereco;
     private String numero;
     private String cnpj;
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
+    private String cidade;
+    private String estado;
+    private String bairro;
     private String latitude;
     private String longitude;
+
+
+
+
 }

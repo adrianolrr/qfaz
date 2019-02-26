@@ -59,29 +59,29 @@ public class LocaisFragments extends Fragment {
 
         Local[] arrayLocal = new Local[1];
 
-        try {
+       /* try {
             arrayLocal = mapper.readValue(local, Local[].class);
         } catch (IOException e) {
           e.printStackTrace();
         }
+*/
 
-
-        List<Local> list = new ArrayList<>();
+       /* List<Local> list = new ArrayList<>();
         try {
             list = mapper.readValue(local, new TypeReference<List<Local>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        this.LocalList = list;
+        //this.LocalList = list;
 
         //listaLocalAdapter = new ArrayAdapter<Local>(getContext(),  R.layout.layout_local, R.id.textViewApelido,  list);
 
         //ListView listviewlocals = findViewById(R.id.lista_local_fechamentos);
 
-        adapterlocals = new LocalAdapter(getContext(), list);
-        updateView();
+        //adapterlocals = new LocalAdapter(getContext(), list);
+        //updateView();
         //listviewlocals.setAdapter(adapterlocals);
     }
 

@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_width="wrap_content">
 
-    <item android:id="@+id/visitas" android:title="Visitas" android:icon="@drawable/ic_event_black_24dp"/>
     <item android:id="@+id/locais" android:title="Locais" android:icon="@drawable/ic_map_black_24dp"/>
     <item android:id="@+id/tickets" android:title="Tickets" android:icon="@drawable/ic_settings_black_24dp"/>
     <item android:id="@+id/cadastro" android:title="Cadastro " android:icon="@drawable/ic_person_black_24dp"/>
