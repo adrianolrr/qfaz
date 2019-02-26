@@ -38,8 +38,8 @@ public class AddLocalActivity extends AppCompatActivity {
 
     Button btnCarregaEnd, btnSalvaLocal;
     private FirebaseAuth mAuth;
-
-    private static final String URLAPI = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+    String URLCORREIOS = "viacep.com.br/ws/";
+    String URLGOOGLE = "https://maps.googleapis.com/maps/api/geocode/json?address=";
     private static final String TOKENAPI = "&key=AIzaSyArIX2Ns0lrBnogBNadDsDa9onybXR5D0s";
 
     EditText editTextCep, editTextCnpj, editTextRazao, editTextNumero, editTextNome;
@@ -53,27 +53,12 @@ public class AddLocalActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        btnCarregaEnd = findViewById(R.id.btnLocalCarregaEndereco);
-        btnCarregaEnd.setOnClickListener(new View.OnClickListener() {
+        btnSalvaLocal = findViewById(R.id.btnSalvarLocal);
+        btnSalvaLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String URL = URLGOOGLE + "+" + end + "+" + numero + "+" + cidade;
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                // prepare the Request
-
-                editTextCep = findViewById(R.id.editTextLocalCep);
-                editTextCnpj = findViewById(R.id.editTextLocalCnpj);
-                editTextRazao = findViewById(R.id.editTextLocalRazao);
-                editTextNumero = findViewById(R.id.editTextLocalNumero);
-                editTextNome = findViewById(R.id.editTextLocalNome);
-
-                cep = editTextCep.getText().toString();
-                numero = editTextNumero.getText().toString();
-                cnpj = editTextCnpj.getText().toString();
-                razao = editTextRazao.getText().toString();
-                nome = editTextNome.getText().toString();
-
-               String URL = URLAPI + cep + "+number+" + numero + TOKENAPI;
-
                 JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
                         new Response.Listener<JSONObject>()
                         {
@@ -87,21 +72,12 @@ public class AddLocalActivity extends AppCompatActivity {
                                 Type type = new TypeToken<String>(){}.getType();
                                 String list = converter.fromJson(response.toString(), type);*/
 
-                                JSONArray json = null;
-                                String rlestados[] = null;
                                 try {
-                                    //json = new JSONArray(response);
-                                    bairro = response.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(1).get("long_name").toString();
-                                    cidade = response.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(2).get("long_name").toString();
-                                    estado = response.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(3).get("long_name").toString();
+                                    latitude = response.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(1).get("long_name").toString();
+                                    longitude = response.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(2).get("long_name").toString();
 
 
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                               /* FirebaseUser user = mAuth.getCurrentUser();
+                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -125,7 +101,73 @@ public class AddLocalActivity extends AppCompatActivity {
                                             }
                                         });
 
-*/
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("Error.Response", error.toString());
+                            }
+                        }
+                );
+
+                getRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        5000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                queue.add(getRequest);
+            }
+        });
+
+        btnCarregaEnd = findViewById(R.id.btnLocalCarregaEndereco);
+        btnCarregaEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                // prepare the Request
+
+                editTextCep = findViewById(R.id.editTextLocalCep);
+                editTextCnpj = findViewById(R.id.editTextLocalCnpj);
+                editTextRazao = findViewById(R.id.editTextLocalRazao);
+                editTextNumero = findViewById(R.id.editTextLocalNumero);
+                editTextNome = findViewById(R.id.editTextLocalNome);
+
+                cep = editTextCep.getText().toString();
+                numero = editTextNumero.getText().toString();
+                cnpj = editTextCnpj.getText().toString();
+                razao = editTextRazao.getText().toString();
+                nome = editTextNome.getText().toString();
+
+                String URL = URLCORREIOS + cep + "/json";
+
+                JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                        new Response.Listener<JSONObject>()
+                        {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // display response
+                                Log.d("Response", response.toString());
+
+                                try {
+                                    //json = new JSONArray(response);
+                                    end = response.get("logradouro").toString();
+                                    cidade = response.get("localidade").toString();
+                                    estado = response.get("uf").toString();
+                                    bairro = response.get("bairro").toString();
+
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
                             }
                         },
