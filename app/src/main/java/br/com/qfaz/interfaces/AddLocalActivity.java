@@ -38,9 +38,9 @@ public class AddLocalActivity extends AppCompatActivity {
 
     Button btnCarregaEnd, btnSalvaLocal;
     private FirebaseAuth mAuth;
-    String URLCORREIOS = "viacep.com.br/ws/";
+    String URLCORREIOS = "https://viacep.com.br/ws/";
     String URLGOOGLE = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-    private static final String TOKENAPI = "&key=AIzaSyArIX2Ns0lrBnogBNadDsDa9onybXR5D0s";
+    private static final String TOKENAPI = "&key=AIzaSyD2yX3k_ViMJKCiwYCbaVx6Tmszw2clYnE";
 
     EditText editTextCep, editTextCnpj, editTextRazao, editTextNumero, editTextNome;
 
@@ -57,9 +57,18 @@ public class AddLocalActivity extends AppCompatActivity {
         btnSalvaLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String URL = URLGOOGLE + "+" + end + "+" + numero + "+" + cidade;
+                editTextCnpj = findViewById(R.id.editTextLocalCnpj);
+                editTextRazao = findViewById(R.id.editTextLocalRazao);
+                editTextNumero = findViewById(R.id.editTextLocalNumero);
+                editTextNome = findViewById(R.id.editTextLocalNome);
+                numero = editTextNumero.getText().toString();
+                cnpj = editTextCnpj.getText().toString();
+                razao = editTextRazao.getText().toString();
+                nome = editTextNome.getText().toString();
+
+                String URLG = URLGOOGLE + "+" + end + "+" + numero + "+" + cidade + TOKENAPI;
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URLG, null,
                         new Response.Listener<JSONObject>()
                         {
                             @Override
@@ -73,8 +82,8 @@ public class AddLocalActivity extends AppCompatActivity {
                                 String list = converter.fromJson(response.toString(), type);*/
 
                                 try {
-                                    latitude = response.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(1).get("long_name").toString();
-                                    longitude = response.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(2).get("long_name").toString();
+                                    latitude = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lat").toString();
+                                    longitude = response.getJSONArray("results").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lng").toString();
 
 
                                  FirebaseUser user = mAuth.getCurrentUser();
@@ -85,8 +94,8 @@ public class AddLocalActivity extends AppCompatActivity {
 
                                 HashMap<String, Object> resultLocal = (HashMap<String, Object>) local.toMap();
 
-                                db.collection("empresas")
-                                        .document("11111")
+                                db.collection("locais")
+                                        .document(cnpj)
                                         .set(resultLocal)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -135,16 +144,9 @@ public class AddLocalActivity extends AppCompatActivity {
                 // prepare the Request
 
                 editTextCep = findViewById(R.id.editTextLocalCep);
-                editTextCnpj = findViewById(R.id.editTextLocalCnpj);
-                editTextRazao = findViewById(R.id.editTextLocalRazao);
-                editTextNumero = findViewById(R.id.editTextLocalNumero);
-                editTextNome = findViewById(R.id.editTextLocalNome);
 
                 cep = editTextCep.getText().toString();
-                numero = editTextNumero.getText().toString();
-                cnpj = editTextCnpj.getText().toString();
-                razao = editTextRazao.getText().toString();
-                nome = editTextNome.getText().toString();
+
 
                 String URL = URLCORREIOS + cep + "/json";
 
