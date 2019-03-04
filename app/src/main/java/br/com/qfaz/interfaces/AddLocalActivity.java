@@ -95,6 +95,8 @@ public class AddLocalActivity extends AppCompatActivity {
                                 HashMap<String, Object> resultLocal = (HashMap<String, Object>) local.toMap();
 
                                 db.collection("locais")
+                                        .document("empresa")
+                                        .collection("111111")
                                         .document(cnpj)
                                         .set(resultLocal)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {

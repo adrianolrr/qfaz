@@ -2,13 +2,28 @@ package br.com.qfaz.interfaces;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.qfaz.R;
+import br.com.qfaz.domain.model.Local;
 import br.com.qfaz.fragments.LocaisFragments;
 
 public class LocalActivity extends AppCompatActivity  {
@@ -21,16 +36,18 @@ public class LocalActivity extends AppCompatActivity  {
 
     ImageButton btnAddCompany;
 
+    List<Local> listLocais;
+
+    LocaisFragments locaisFragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local);
 
-        LocaisFragments locaisFragments = new LocaisFragments();
+        locaisFragments = new LocaisFragments();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();// begin  FragmentTransaction
-        ft.add(R.id.frameLayoutLocal, locaisFragments);                                // add    Fragment
-        ft.commit();
+
 
 
         btnAddCompany = findViewById(R.id.toolbar_button);
@@ -41,7 +58,72 @@ public class LocalActivity extends AppCompatActivity  {
                 startActivity(intent);
             }
         });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        final Gson converter = new Gson();
+
+        final Type type = new TypeToken<String>(){}.getType();
+
+
+        final List<String> listaLocais = new ArrayList<>();
+
+        CollectionReference docRef = db.collection("locais");//.collection("empresa").document("111111");
+        db.collection("locais")
+                .document("empresa")
+                .collection("111111")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            for(Object item : task.getResult().getData().values())
+                                listaLocais.add(item.toString());
+
+                            //List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+
+
+                          /*  Object[] locais = myListOfDocuments.toArray();
+
+                            locaisFragments = new LocaisFragments();
+
+                            Bundle args = new Bundle();
+                            //args.putInt("position", position);
+                            args.putString("locais", String.valueOf(myListOfDocuments));
+                            locaisFragments.setArguments(args);
+
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();// begin  FragmentTransaction
+                            ft.add(R.id.frameLayoutLocal, locaisFragments);                                // add    Fragment
+                            ft.commit();
+
+
+                            Log.d("", myListOfDocuments.toString());*/
+
+
+                        } else {
+                            Log.d("", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+
+       /* docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("", "No such document");
+                    }
+                } else {
+                    Log.d("", "get failed with ", task.getException());
+                }
+            }
+        });
+*/
       /*
 
         // Add Fragment to FrameLayout (flContainer), using FragmentManager
