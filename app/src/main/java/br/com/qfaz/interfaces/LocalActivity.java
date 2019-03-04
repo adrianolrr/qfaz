@@ -9,24 +9,39 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.qfaz.R;
 import br.com.qfaz.domain.model.Local;
 import br.com.qfaz.fragments.LocaisFragments;
 
+
 public class LocalActivity extends AppCompatActivity  {
+
+    Local local;
 
     String cnpj, nome, razao, cep, endereco, numero, latitude, longitude, estado, cidade, bairro;
 
@@ -60,51 +75,63 @@ public class LocalActivity extends AppCompatActivity  {
         });
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        final Gson converter = new Gson();
-
-        final Type type = new TypeToken<String>(){}.getType();
-
-
-        final List<String> listaLocais = new ArrayList<>();
-
         CollectionReference docRef = db.collection("locais");//.collection("empresa").document("111111");
         db.collection("locais")
                 .document("empresa")
                 .collection("111111")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            List<Map<String, Object>> listaLocais = new ArrayList<>();
+                            List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                            JSONArray jsonArr = null;
+                            List<Local> lista = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("TAG", document.getId() + " => " + document.getData());
+                                listaLocais.add(document.getData());
+                                local = new Local(
+                                        document.getData().get("cnpj").toString(),
+                                        document.getData().get("razao").toString(),
+                                        document.getData().get("nome").toString(),
+                                        document.getData().get("cep").toString(),
+                                        document.getData().get("endereco").toString(),
+                                        document.getData().get("numero").toString(),
+                                        document.getData().get("latitude").toString(),
+                                        document.getData().get("longitude").toString(),
+                                        document.getData().get("cidade").toString(),
+                                        document.getData().get("estado").toString(),
+                                        document.getData().get("bairro").toString());
+                                lista.add(local);
+                            }
 
-                            for(Object item : task.getResult().getData().values())
-                                listaLocais.add(item.toString());
+                            ObjectMapper mapper = new ObjectMapper();
+                            String locaisJson = null;
+                            try {
+                                locaisJson = mapper.writeValueAsString(lista);
+                            } catch (JsonProcessingException e) {
+                                e.printStackTrace();
+                            }
 
-                            //List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
-
-
-                          /*  Object[] locais = myListOfDocuments.toArray();
-
-                            locaisFragments = new LocaisFragments();
-
+                            LocaisFragments locaisFragments = new LocaisFragments();
                             Bundle args = new Bundle();
-                            //args.putInt("position", position);
-                            args.putString("locais", String.valueOf(myListOfDocuments));
+                            args.putString("locais", lista.toString());
+                            args.putString("locaisJson", locaisJson);
                             locaisFragments.setArguments(args);
 
-                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();// begin  FragmentTransaction
-                            ft.add(R.id.frameLayoutLocal, locaisFragments);                                // add    Fragment
-                            ft.commit();
-
-
-                            Log.d("", myListOfDocuments.toString());*/
-
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.frameLayoutLocal, locaisFragments) // replace flContainer
+                                    .addToBackStack(null)
+                                    .commit();
 
                         } else {
                             Log.d("", "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
 
 
 

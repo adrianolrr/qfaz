@@ -15,32 +15,32 @@
         android:text="Apelido" />
 
     <TextView
-        android:id="@+id/textViewDataHora"
+        android:id="@+id/textViewRazao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:textSize="16sp"
         android:textStyle="bold"
-        tools:text="Data" />
+        tools:text="Razao" />
 
     <TextView
-        android:id="@+id/textViewValorNF"
+        android:id="@+id/textViewCidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="35dp"
-        android:text="Valor"
+        android:text="Cidade"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textViewRamo"
+        android:id="@+id/textViewEndereco"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_above="@+id/textViewValorNF"
+        android:layout_above="@+id/textViewCidade"
         android:layout_alignParentStart="true"
-        android:text="Ramo"
+        android:text="Endereco"
         android:textSize="12sp" />
 </LinearLayout>
