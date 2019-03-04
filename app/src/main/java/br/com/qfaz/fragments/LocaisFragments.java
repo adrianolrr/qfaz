@@ -48,41 +48,25 @@ public class LocaisFragments extends Fragment {
         if(savedInstanceState == null){
             // Get back arguments
             if(getArguments() != null) {
-                position = getArguments().getInt("position", 0);
-                local = getArguments().getString("local");
+                local = getArguments().getString("locais");
             }
         }
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-
-        Local[] arrayLocal = new Local[1];
-
-       /* try {
-            arrayLocal = mapper.readValue(local, Local[].class);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-*/
-
-       /* List<Local> list = new ArrayList<>();
+        List<Local> list = new ArrayList<>();
         try {
             list = mapper.readValue(local, new TypeReference<List<Local>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
-        //this.LocalList = list;
+        this.LocalList = list;
 
-        //listaLocalAdapter = new ArrayAdapter<Local>(getContext(),  R.layout.layout_local, R.id.textViewApelido,  list);
-
-        //ListView listviewlocals = findViewById(R.id.lista_local_fechamentos);
-
-        //adapterlocals = new LocalAdapter(getContext(), list);
-        //updateView();
-        //listviewlocals.setAdapter(adapterlocals);
+        adapterlocals = new LocalAdapter(getContext(), list);
+        updateView();
     }
 
     @Override
