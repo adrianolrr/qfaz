@@ -13,21 +13,25 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 import br.com.qfaz.R;
 import br.com.qfaz.domain.model.Local;
 
-public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.LocalViewHolder> implements ListAdapter {
+public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.LocalViewHolder>  {
     private final Context context;
     private List<Local> localList;
 
-
+    private ArrayList<Local> arraylist;
 
     public LocalAdapter(Context context, List<Local> localList) {
         this.context = context;
         this.localList = localList;
+        this.arraylist = new ArrayList<Local>();
+        this.arraylist.addAll(localList);
     }
 
     @Override
@@ -58,50 +62,6 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.LocalViewHol
         return localList.size();
     }
 
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled(int i) {
-        return false;
-    }
-
-    @Override
-    public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-
-    }
-
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 
     static class LocalViewHolder extends RecyclerView.ViewHolder {
 
@@ -116,5 +76,20 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.LocalViewHol
             txtcidade =  itemView.findViewById(R.id.textViewCidade);
             txtendereco =  itemView.findViewById(R.id.textViewEndereco);
         }
+    }
+
+    public void filter(String charText) {
+        charText = charText.toUpperCase(Locale.getDefault());
+        localList.clear();
+        if (charText.length() == 0) {
+            localList.addAll(arraylist);
+        } else {
+            for (Local wp : arraylist) {
+                if (wp.getNome().toUpperCase(Locale.getDefault()).contains(charText)) {
+                    localList.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

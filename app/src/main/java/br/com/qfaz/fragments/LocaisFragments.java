@@ -7,7 +7,6 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,15 +35,17 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import br.com.qfaz.R;
+import br.com.qfaz.adapters.ListLocalAdapter;
 import br.com.qfaz.adapters.LocalAdapter;
 import br.com.qfaz.domain.model.Local;
 
 
 
-public class LocaisFragments extends Fragment {
+public class LocaisFragments extends Fragment implements SearchView.OnQueryTextListener {
 
     int position = 0;
     TextView txtValor, txtData, txtApelido, txtRamo;
@@ -57,13 +59,14 @@ public class LocaisFragments extends Fragment {
     ListView listViewLocals;
     ListFragment listFragmentLocals;
 
-    LocalAdapter adapterlocals;
+    ListLocalAdapter adapterlocals;
 
     String locaisJson;
+    LocalAdapter localAdapter;
 
     private RecyclerView mRecyclerView;
     private List<Local> mModels;
-
+    List<Local> listLocal;
     ListView listviewlocals;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,7 +82,7 @@ public class LocaisFragments extends Fragment {
 
 
         ObjectMapper mapper = new ObjectMapper();
-        List<Local> listLocal = null;
+        //List<Local> listLocal = null;
         try {
             listLocal = mapper.readValue(locaisJson, new TypeReference<List<Local>>(){});
         } catch (IOException e) {
@@ -87,8 +90,8 @@ public class LocaisFragments extends Fragment {
         }
 
         //adapterlocals = new ArrayAdapter<String>(getContext(),  android.R.layout.simple_list_item_1, listLocal);
-        adapterlocals = new LocalAdapter(getContext(), listLocal);
-        //updateView();
+        adapterlocals = new ListLocalAdapter(getContext(), listLocal);
+        updateView();
     }
 
     @Override
@@ -102,19 +105,38 @@ public class LocaisFragments extends Fragment {
         listviewlocals =  view.findViewById(R.id.lvItemsLocal);
         listviewlocals.setAdapter(adapterlocals);
 
-        listviewlocals.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                //Toast.makeText(getContext(), fechamento , Toast.LENGTH_LONG).show();
-
-            }
-        });
-
     }
 
     // Activity is calling this to update view on Fragment
     public void updateView(){
         adapterlocals.notifyDataSetChanged();
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String text = newText;
+        localAdapter.filter(text);
+        return false;
+    }
+
+
+    private ArrayList<Local> populateList(){
+
+        ArrayList<Local> list = new ArrayList<>();
+
+        for(int i = 0; i < listLocal.size(); i++){
+            Local imageModel = new Local();
+            imageModel.setNome(listLocal.get(i).getNome());
+            list.add(imageModel);
+        }
+
+        return list;
+    }
+
+
 }

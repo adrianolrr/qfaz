@@ -6,7 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    
+    <SearchView
+        android:id="@+id/editsearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:layout_editor_absoluteX="0dp">
 
+    </SearchView>
 
     <ListView
         android:id="@+id/lvItemsLocal"

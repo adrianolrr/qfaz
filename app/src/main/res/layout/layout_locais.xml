@@ -6,6 +6,8 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+
     <TextView
         android:id="@+id/textViewApelido"
         android:layout_width="match_parent"
