@@ -20,20 +20,6 @@
 
 
         <TextView
-            android:id="@+id/textViewApelido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/textViewEndereco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:textColor="#000000" />
-
-        <TextView
             android:id="@+id/textViewLocal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,21 +27,18 @@
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/textViewCidade"
+            android:id="@+id/textViewData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/textViewRazao"
+            android:id="@+id/textViewHorario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
-            android:textStyle="bold" />
-
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="#000000" />
 
     </android.support.v7.widget.CardView>
 

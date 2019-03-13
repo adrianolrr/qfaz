@@ -113,7 +113,8 @@ public class VisitaActivity extends AppCompatActivity implements  View.OnClickLi
                         "1",
                         null,
                         "05/02/2019",
-                        "22:15"));
+                        "22:15",
+                        ""));
 
 
         //creating recyclerview adapter
@@ -146,7 +147,7 @@ public class VisitaActivity extends AppCompatActivity implements  View.OnClickLi
 
                 FirebaseUser user = mAuth.getCurrentUser();
 
-                Visita visita = new Visita(user.getUid(), null, data, horario);
+                Visita visita = new Visita(user.getUid(), null, data, horario, "");
 
                 HashMap<String, Object> resultVisita = (HashMap<String, Object>) visita.toMap();
 

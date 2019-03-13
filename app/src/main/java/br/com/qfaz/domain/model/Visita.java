@@ -40,11 +40,12 @@ public class Visita {
         this.horario = horario;
     }
 
-    public Visita(String uid, Local local, String data, String horario) {
+    public Visita(String uid, Local local, String data, String horario, String status) {
         this.uid = uid;
         this.local = local;
         this.data = data;
         this.horario = horario;
+        this.status = status;
     }
 
     public Visita(){
@@ -58,6 +59,7 @@ public class Visita {
         result.put("local", local);
         result.put("horario", horario);
         result.put("data", data);
+        result.put("status", status);
 
         return result;
     }
@@ -66,4 +68,14 @@ public class Visita {
     private Local local;
     private String data;
     private String horario;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    private String status;
 }

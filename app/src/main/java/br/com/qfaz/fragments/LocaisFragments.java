@@ -4,13 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,22 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import br.com.qfaz.R;
 import br.com.qfaz.adapters.ListLocalAdapter;
@@ -59,7 +43,7 @@ public class LocaisFragments extends Fragment implements SearchView.OnQueryTextL
     ListView listViewLocals;
     ListFragment listFragmentLocals;
 
-    ListLocalAdapter adapterlocals;
+    ListLocalAdapter adaptervisitas;
 
     String locaisJson;
     LocalAdapter localAdapter;
@@ -68,6 +52,7 @@ public class LocaisFragments extends Fragment implements SearchView.OnQueryTextL
     private List<Local> mModels;
     List<Local> listLocal;
     ListView listviewlocals;
+    private SearchView editsearch;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +75,8 @@ public class LocaisFragments extends Fragment implements SearchView.OnQueryTextL
         }
 
         //adapterlocals = new ArrayAdapter<String>(getContext(),  android.R.layout.simple_list_item_1, listLocal);
-        adapterlocals = new ListLocalAdapter(getContext(), listLocal);
+        localAdapter = new LocalAdapter(getContext(), listLocal);
+        adaptervisitas = new ListLocalAdapter(getContext(), listLocal);
         updateView();
     }
 
@@ -102,14 +88,38 @@ public class LocaisFragments extends Fragment implements SearchView.OnQueryTextL
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        listviewlocals =  view.findViewById(R.id.lvItemsLocal);
-        listviewlocals.setAdapter(adapterlocals);
+        listviewlocals = view.findViewById(R.id.lvItemsLocal);
+        listviewlocals.setAdapter(adaptervisitas);
+        editsearch = view.findViewById(R.id.editsearch);
+        editsearch.setOnQueryTextListener(this);
 
+        listviewlocals.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //String item = listviewlocals.getItemAtPosition(position).toString();
+
+                Local local = listLocal.get(position);
+                Toast.makeText(getContext(), local.toString(), Toast.LENGTH_LONG).show();
+
+
+                AgendamentoVisitaFragments agendamentoFragments = new AgendamentoVisitaFragments();
+                Bundle args = new Bundle();
+                args.putString("nome", local.getNome());
+                agendamentoFragments.setArguments(args);
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayoutLocal, agendamentoFragments) // replace flContainer
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
     }
 
     // Activity is calling this to update view on Fragment
     public void updateView(){
-        adapterlocals.notifyDataSetChanged();
+        adaptervisitas.notifyDataSetChanged();
     }
 
     @Override

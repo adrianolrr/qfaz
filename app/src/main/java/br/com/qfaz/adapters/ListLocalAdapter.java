@@ -30,7 +30,7 @@ public class ListLocalAdapter extends ArrayAdapter<Local> {
         View rowView = inflater.inflate(R.layout.layout_locais, parent, false);
         txtendereco = (TextView) rowView.findViewById(R.id.textViewEndereco);
         txtcidade = (TextView) rowView.findViewById(R.id.textViewCidade);
-        txtrazao = (TextView) rowView.findViewById(R.id.textViewRazao);
+        txtrazao = (TextView) rowView.findViewById( R.id.textViewRazao);
         txtapelido = (TextView) rowView.findViewById(R.id.textViewApelido);
 
         Local local = LocalList.get(position);

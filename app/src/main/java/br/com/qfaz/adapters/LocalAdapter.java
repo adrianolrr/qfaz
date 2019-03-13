@@ -1,9 +1,13 @@
 package br.com.qfaz.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
+import android.os.Build;
 import android.os.LocaleList;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +26,7 @@ import br.com.qfaz.R;
 import br.com.qfaz.domain.model.Local;
 
 public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.LocalViewHolder>  {
-    private final Context context;
+    private Context context;
     private List<Local> localList;
 
     private ArrayList<Local> arraylist;
@@ -47,13 +51,12 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.LocalViewHol
 
     @Override
     public void onBindViewHolder(LocalAdapter.LocalViewHolder holder, int position) {
-        Local local = localList.get(position);
+        final Local local = localList.get(position);
         //binding the data with the viewholder views
         holder.txtapelido.setText("Apelido:" + " " + local.getRazao());
         holder.txtrazao.setText("Razao:" + " " + local.getRazao());
         holder.txtendereco.setText("Endereco:" + " R$ " + local.getEndereco());
         holder.txtcidade.setText("Cidade:" + " " + local.getCidade());
-
 
     }
 
@@ -68,24 +71,26 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.LocalViewHol
         TextView txtapelido, txtrazao, txtcidade, txtendereco;
 
 
-        public LocalViewHolder(View itemView) {
+        public LocalViewHolder(final View itemView) {
             super(itemView);
 
             txtapelido =  itemView.findViewById(R.id.textViewApelido);
             txtrazao = itemView.findViewById(R.id.textViewRazao);
             txtcidade =  itemView.findViewById(R.id.textViewCidade);
             txtendereco =  itemView.findViewById(R.id.textViewEndereco);
+
         }
+
     }
 
-    public void filter(String charText) {
-        charText = charText.toUpperCase(Locale.getDefault());
+    public void filter(String text) {
+        text = text.toUpperCase(Locale.getDefault());
         localList.clear();
-        if (charText.length() == 0) {
+        if (text.length() == 0) {
             localList.addAll(arraylist);
         } else {
             for (Local wp : arraylist) {
-                if (wp.getNome().toUpperCase(Locale.getDefault()).contains(charText)) {
+                if (wp.getNome().toUpperCase(Locale.getDefault()).contains(text)) {
                     localList.add(wp);
                 }
             }
